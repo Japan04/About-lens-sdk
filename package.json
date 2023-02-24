@@ -1,0 +1,68 @@
+{
+  "name": "lens-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "pnpm clean && turbo build",
+    "postinstall": "preconstruct dev",
+    "clean": "rimraf packages/*/*/dist packages/*/dist",
+    "build:packages": "turbo run build:packages",
+    "test": "turbo run test --no-cache",
+    "dev": "turbo dev",
+    "dev:packages": "pnpm preconstruct dev",
+    "lint": "turbo run lint --parallel",
+    "lint:fix": "turbo run lint:fix --parallel --no-cache",
+    "lint:examples": "sh ./scripts/lint-examples.sh",
+    "deduplicate:check": "pnpm-deduplicate --list",
+    "deduplicate:fix": "pnpm-deduplicate"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "@preconstruct/cli": "^2.3.0",
+    "pnpm-deduplicate": "^0.4.2",
+    "prettier": "^2.8.4",
+    "rimraf": "^4.1.2",
+    "turbo": "^1.8.1"
+  },
+  "resolutions": {
+    "ethereumjs-abi": "https://registry.npmjs.org/ethereumjs-abi/-/ethereumjs-abi-0.6.8.tgz"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "react-native",
+        "@tanstack/query-core",
+        "csstype",
+        "rollup"
+      ],
+      "allowedVersions": {
+        "@solana/web3.js": "1.52.0"
+      }
+    },
+    "overrides": {
+      "ganache": "7.7.4"
+    }
+  },
+  "engines": {
+    "node": "^18.12.1",
+    "pnpm": "^7.27.1"
+  },
+  "packageManager": "pnpm@7.27.1",
+  "preconstruct": {
+    "packages": [
+      "packages/domain",
+      "packages/react",
+      "packages/shared-kernel",
+      "packages/api-bindings",
+      "packages/wagmi",
+      "packages/blockchain-bindings",
+      "packages/storage",
+      "packages/client"
+    ]
+  }
+}
